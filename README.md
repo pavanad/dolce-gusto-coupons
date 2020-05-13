@@ -1,2 +1,2 @@
-# dolce-gusto-coupons
-Automatic coupon filling tool on the Dolce Gusto Brasil website
+# Dolce Gusto Coupons
+Automatic coupon filling tool on the Dolce Gusto Brazil website
