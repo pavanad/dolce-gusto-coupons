@@ -21,7 +21,7 @@ def main():
 
     try:
         if args["csv"] is None and args["images"] is None:
-            raise Exception("Path do csv file or images files is required.")
+            raise Exception("Path of the csv file or images files is required.")
 
         print(f"\n{message_status} Starting...")
         if args["csv"] is not None:
@@ -36,6 +36,12 @@ def main():
         browser = open_browser()
 
         for coupon in coupons:
+            if not coupon:
+                print(
+                    f"{message_status} {Fore.RED}Coupon not found in file{Fore.RESET}"
+                )
+                continue
+
             print(f"{message_status} Applying the coupon {coupon}")
             coupon_code = browser.find_elements_by_id("coupon_code")
             save_button = browser.find_elements_by_css_selector(
