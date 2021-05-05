@@ -7,7 +7,7 @@ from secrets import DOLCE_PASSWORD, DOLCE_USERNAME
 from colorama import Fore
 
 from coupons import get_coupons_from_csv_file, get_coupons_from_images
-from services import open_browser
+from services.api import DolceGustoClient
 
 
 def main():
@@ -31,9 +31,10 @@ def main():
             print(f"{message_status} Get coupons from images")
             coupons = get_coupons_from_images(args["images"])
 
-        # open browser and login
-        print(f"{message_status} Opening the browser and accessing the system")
-        browser = open_browser()
+        # connect to the API client
+        print(f"{message_status} Connecting to the Dolce Gusto API")
+        client = DolceGustoClient(username=DOLCE_USERNAME, password=DOLCE_PASSWORD)
+        client.authenticate()
 
         for coupon in coupons:
             if not coupon:
@@ -42,14 +43,9 @@ def main():
                 )
                 continue
 
+            client.send_coupon(coupon)
             print(f"{message_status} Applying the coupon {coupon}")
-            coupon_code = browser.find_elements_by_id("coupon_code")
-            save_button = browser.find_elements_by_css_selector(
-                '.button[value="Salvar"]'
-            )
-            coupon_code[0].send_keys(coupon)
-            save_button[0].click()
-            time.sleep(2)
+            time.sleep(0.5)
 
         print(f"{message_status} {Fore.GREEN}Done{Fore.RESET}\n")
 

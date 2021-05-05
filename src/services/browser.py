@@ -3,7 +3,6 @@
 import time
 from secrets import DOLCE_PASSWORD, DOLCE_USERNAME
 
-import requests
 from selenium import webdriver
 
 
@@ -11,6 +10,8 @@ def open_browser():
     url = "https://www.nescafe-dolcegusto.com.br/"
     browser = webdriver.Firefox()
     browser.get(url)
+
+    browser.find_element_by_css_selector("a.my-account").click()
 
     username = browser.find_element_by_id("email")
     password = browser.find_element_by_id("pass")
